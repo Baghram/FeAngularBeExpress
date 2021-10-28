@@ -28,6 +28,12 @@ const UserSchema = new Schema({
     min: 0,
     default: 0,
   },
+  history: [
+    {
+      type: mongoose.Types.ObjectId,
+      ref: 'History',
+    },
+  ],
 });
 UserSchema.plugin(uniqueValidator);
 

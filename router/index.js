@@ -11,17 +11,17 @@ router.get("/login", (req, res) => {
 });
 router.post("/login", UserController.Login);
 router.get("/register", (req, res) => {
-  return res.sendFile(
-    path.join(process.cwd() + "/FE/lib/register.html")
-  );
+  return res.sendFile(path.join(process.cwd() + "/FE/lib/register.html"));
 });
 router.post("/register", UserController.Register);
-router.get('/home', (req, res) => {
-  return res.sendFile(
-    path.join(process.cwd() + "/FE/lib/home.html")
-  );
-})
+router.get("/home", (req, res) => {
+  return res.sendFile(path.join(process.cwd() + "/FE/lib/home.html"));
+});
 router.get("/balance", authentication, UserController.GetBalance);
 router.post("/balance", authentication, UserController.AddBalance);
+router.get("/history", authentication, UserController.GetHistory);
+router.get('/balancehistory', (req, res) => {
+  return res.sendFile(path.join(process.cwd() + "/FE/lib/history.html"));
+})
 
 module.exports = router;

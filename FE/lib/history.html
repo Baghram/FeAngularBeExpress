@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Main</title>
+    <title>History</title>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular-route.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular-resource.js"></script>
@@ -23,12 +23,7 @@
       crossorigin="anonymous"
     ></script>
   </head>
-  <body
-    ng-app="app"
-    ng-controller="homeController"
-    style="width: 100vw; height: 100vh"
-  >
-    <!-- <div ng-view></div> -->
+  <body ng-app="app" ng-controller="historyController">
     <div
       style="
         justify-content: center;
@@ -43,38 +38,24 @@
         padding: 5%;
       "
     >
-      <h1>{{PAGE}}</h1>
-      <div class="card" style="width: 18rem">
-        <div class="card-body">
-          <h5 class="card-title">name: {{name}}</h5>
-          <p class="card-text">Phone Number: {{phoneNumber}}</p>
-          <p class="card-text">CurrentBalance : {{currentBalance}}</p>
-        </div>
-        <div style="margin-bottom: 20px; padding-left: 13px">
-          <form>
-            <input type="text" ng-model="addBalance" />
-            <div style="padding-top: 5px;padding-bottom: 5px;padding-right:5px;">
-              <button
-                type="submit"
-                class="btn btn-primary"
-                ng-click="addBalanceExec()"
-              >
-                Add Balance
-              </button>
-              <button type="button" class="btn btn-danger" ng-click="logOut()">
-                Log Out
-              </button>
-              <button
-                type="button"
-                class="btn btn-secondary"
-                ng-click="history()"
-              >
-                history
-              </button>
-            </div>
-          </form>
-        </div>
-      </div>
+      <h1 style="text-align: center">History</h1>
+      <table class="table table-primary table-bordered table-hover">
+        <thead>
+          <tr>
+            <th scope="col">amount</th>
+            <th scope="col">date</th>
+          </tr>
+        </thead>
+        <tbody ng-repeat="data in datas">
+          <tr>
+            <td>{{data.amount}}</td>
+            <td>{{data.date}}</td>
+          </tr>
+        </tbody>
+      </table>
+      <button type="button" class="btn btn-danger" ng-click="home()">
+        Home
+      </button>
     </div>
   </body>
 </html>

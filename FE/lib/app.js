@@ -1,3 +1,4 @@
+
 const app = angular.module("app", []);
 let env = {};
 if (window) {
@@ -138,6 +139,36 @@ app.controller("homeController", [
     $scope.logOut = () => {
       localStorage.clear();
       window.location.href = "/";
+    };
+    $scope.history = () => {
+      axios({
+        url: `${env.BEURL}/history`,
+        method: "GET",
+        headers: {
+          token: localStorage.getItem("token"),
+        },
+      })
+        .then((result) => {
+          localStorage.setItem(
+            "history",
+            JSON.stringify(result.data.data.balanceHistory)
+          );
+          window.location.href = "/balancehistory";
+        })
+        .catch((err) => {
+          alert(err.response.data.error);
+        });
+    };
+  },
+]);
+
+app.controller("historyController", [
+  "$scope",
+  function ($scope) {
+    $scope.datas = [{ amount: 3000, date: "asdf" }];
+    $scope.datas = JSON.parse(localStorage.getItem("history"));
+    $scope.home = () => {
+      window.location.href = "/home";
     };
   },
 ]);

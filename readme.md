@@ -20,6 +20,7 @@
 2.  [Register](#register)
 3.  [Get Balance](#getbalance)
 4.  [Add Balance](#addbalance)
+5.  [Get Balance History](#gethistory)
 
 ---
 
@@ -108,6 +109,7 @@ None
   }</code></pre>
 
 ### Success Response:
+
 <pre><code>
 Code 201 Created
 Content: {
@@ -127,6 +129,7 @@ Content: {
 </code></pre>
 
 ---
+
 ## <a id="getbalance">Get Balance</a>
 
 ### Url
@@ -143,7 +146,7 @@ None
 
 ### Required:
 
-- 
+-
 
 ### Optional:
 
@@ -158,6 +161,7 @@ None
   </code></pre>
 
 ### Success Response:
+
 <pre><code>
 Code 200 Ok
 Content: {
@@ -191,13 +195,14 @@ Content: {
 ### Method:
 
 <b> POST</b>
+
 ### URL Params:
 
 None
 
 ### Required:
 
-- 
+-
 
 ### Optional:
 
@@ -212,6 +217,7 @@ None
   </code></pre>
 
 ### Success Response:
+
 <pre><code>
 Code 200 Ok
 Content: {
@@ -229,6 +235,67 @@ Content: {
 Code 400 Bad Request
 Content: {
     "message": "Add BalanceFailed",
+    "error": "User Does Not Exist"
+}
+</code></pre>
+
+---
+
+## <a id="gethistory">Get Balance History</a>
+
+### Url
+
+<code>"/history"</code>
+
+### Method:
+
+<b> GET</b>
+
+### URL Params:
+
+None
+
+### Required:
+
+-
+
+### Optional:
+
+-
+
+### Data Params
+
+<pre><code>
+  headers : {
+      token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MTc5NzczNjUxMWI3MTg0NTBhODJlNTMiLCJpYXQiOjE2MzU0MDA4NDB9.LJhE-QIdm0fr0x5MdmKru7N6ulj0qtAVVYr3oftP2vU
+  }
+  </code></pre>
+
+### Success Response:
+
+<pre><code>
+Code 200 Ok
+Content: {
+    "message": "Get History Success",
+    "data": {
+        "_id": "617a522d8dc910b837756042",
+        "balanceHistory": [
+            {
+                "date": "2021-10-28T07:35:00.758Z",
+                "amount": "3000",
+                "__v": 0
+            }
+        ]
+    }
+}
+</code></pre>
+
+### Error Response:
+
+<pre><code>
+Code 400 Bad Request
+Content: {
+    "message": "Get History Failed",
     "error": "User Does Not Exist"
 }
 </code></pre>

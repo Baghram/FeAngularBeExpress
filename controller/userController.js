@@ -1,7 +1,8 @@
 const axios = require("axios");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
-const { User } = require("../schema/index");
+const mongoose = require("mongoose");
+const { User, History } = require("../schema/index");
 class UserController {
   static async Login(req, res) {
     try {
@@ -99,6 +100,49 @@ class UserController {
           error: error.message,
         });
       }
+    }
+  }
+  static async GetHistory(req, res) {
+    try {
+      const { authenticated } = req;
+      const userExist = await User.exists({ _id: authenticated._id });
+      if (!userExist) throw new Error("User Does Not Exist");
+      let searchID = mongoose.Types.ObjectId(authenticated._id);
+      let data = await User.aggregate([
+        {
+          $match: { _id: searchID },
+        },
+        {
+          $project: {
+            _id: 1,
+            history: 1,
+          },
+        },
+        {
+          $lookup: {
+            from: "histories",
+            localField: "history",
+            foreignField: "_id",
+            as: "balanceHistory",
+          },
+        },
+        {
+          $project: {
+            history: 0,
+            "balanceHistory._id": 0,
+            "balanceHistory.owner": 0
+          },
+        },
+      ]);
+      return res.status(200).json({
+        message: "Get History Success",
+        data: data[0],
+      });
+    } catch (error) {
+      return res.status(400).json({
+        message: "Get History Failed",
+        error: error.message,
+      });
     }
   }
 }
